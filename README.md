@@ -2,7 +2,7 @@
 **Un petit repo pour étudier les associations françaises (sans prétention aucune)*
 
 Ce repo a deux objectifs distincts et intimement liés :
-+ expliciter une analyse d'un jeu de données avec un but pédagogique de découverte à la fois d'un langage de programmation et de représentations d'un jeux de données ;
++ expliciter une analyse d'un jeu de données avec un but pédagogique de découverte à la fois d'un langage de programmation et de manières de représenter un jeu de données ;
 + découvrir les associations françaises à travers un jeu de données public ;
 + (un objectif collatéral est de promouvoir l'utilisation du langage Markdown pour la prise de notes et la rédaction de travaux de recherche en R Markdown).
 
