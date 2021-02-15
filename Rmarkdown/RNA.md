@@ -6,6 +6,8 @@ administratif
 -   [2 Découvrir les données](#decouvrir)
     -   [2.1 Aller chercher les données sur le site
         Data.gouv.fr](#aller-chercher-les-données-sur-le-site-data.gouv.fr)
+        -   [2.1.1 Comprendre le site](#comprendre-le-site)
+        -   [2.1.2 Découvrons les données](#découvrons-les-données)
 -   [3 Elles sont où les assos ? ou Répresentations
     géographiques](#geographie)
     -   [3.1 Crééer la variable de
