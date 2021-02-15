@@ -2,7 +2,19 @@ RNA - Une étude des associations françaises sur la base d’un document
 administratif
 ================
 
-# Introduction
+-   [1 Introduction](#intro)
+-   [2 Découvrir les données](#decouvrir)
+    -   [2.1 Aller chercher les données sur le site
+        Data.gouv.fr](#aller-chercher-les-données-sur-le-site-data.gouv.fr)
+-   [3 Elles sont où les assos ? ou Répresentations
+    géographiques](#geographie)
+    -   [3.1 Crééer la variable de
+        département](#crééer-la-variable-de-département)
+    -   [3.2 Cartes de l’IGN](#cartes-de-lign)
+    -   [3.3 Joindre les données géographiques et
+        d’associations](#joindre-les-données-géographiques-et-dassociations)
+
+# 1 Introduction
 
 Pourquoi ce document a-t-il un nom si mystérieux ? Et à qui
 s’adresse-t-il ?
@@ -10,17 +22,20 @@ s’adresse-t-il ?
 L’idée derrière ce projet est de se concentrer à la fois sur l’usage
 d’un language de programmation (R) et sur ses utilisations possibles,
 ici l’étude des associations loi 1901 françaises. Les publics visés sont
-multiples puisqu’on essaiera de faire en sort qu’aucun pré-requis ne
-soit nécessaire.
+multiples puisqu’on essaiera de faire en sorte qu’aucun pré-requis ne
+soit nécessaire pour comprendre le cheminement.
 
-Je vais expliciter tout le cheminement de pensée. Des élèves de Seconde
-ne pourront peut-être pas tout comprendre, et des étudiant·es de Master
-2 trouveront peut-être cela trop lent. Un goût de trop peu même ! Mais
-l’idée est d’attiser la curiosité et de faire faire avant de parler
-théorie et concepts emmerdants pour chercheur·euses hors du sol et
-derrière son ordi dans un vieux bureau.
+Je vais tenter tout expliciter, comme si j’apprenais en écrivant (ce qui
+est parfois vrai). Des élèves de Seconde ne pourront peut-être pas tout
+comprendre, et des étudiant·es de Master 2 trouveront peut-être cela
+trop lent. Un goût de trop peu même ! Mais l’idée est d’attiser la
+curiosité et de *faire faire* !
 
-# Chapitre 1 : Découvrir les données (\#decouvrir)
+PS : si des personnes souhaitent contribuer au projet, c’est avez grand
+plaisir. Rien n’est encore fixé (font et forme) et c’est d’autant plus
+intéressant de travailler collectivement !
+
+# 2 Découvrir les données
 
 Une question est apparue spontanément. Qui sont les associations
 françaises ? Répondre à cette question en amène directement d’autres. Où
@@ -35,9 +50,9 @@ médecins par département et par spécialité. Il en existe d’autres comme
 le site de l’INSEE. Celui-ci provient tout de même d’une volonté
 explicite de publiciser les données produites par l’Etat.
 
-## 1. Aller chercher les données sur le site Data.gouv.fr
+## 2.1 Aller chercher les données sur le site Data.gouv.fr
 
-### 1.1. Comprendre le site
+### 2.1.1 Comprendre le site
 
 Il suffit donc d’écrire “rna associations” dans la barre de recherche.
 Le premier résultat s’intitule “Répertoire National des Associations” et
@@ -78,7 +93,7 @@ un encart “Documentation” et un fichier “Description des données
 exposées par le RNA”. Ce fichier est un tableau qui décrit exactement ce
 qui est présent dans les données du RNA.
 
-### 1.2. Découvrons les données
+### 2.1.2 Découvrons les données
 
 Ouvrons ce fichier. On peut d’abord y voir le nom exact du jeu de
 données correspondant au tableau qui suit :![Nom du jeu de
@@ -185,14 +200,14 @@ head(assoBZH, n = 5)[,1:5]
     ## 4 221S0221000029 0221000029  <NA>    221S 0001-01-01
     ## 5 221S0221000035 0221000035  <NA>    221S 0001-01-01
 
-# Chapitre 2 : Elles sont où les assos ? ou Répresentations géographiques (\#geographie)
+# 3 Elles sont où les assos ? ou Répresentations géographiques
 
 On a vu dans les données que pour chaque association on a le code INSEE
 sous la variable “adrs\_codeinsee”. Le code INSEE, c’est un peu comme le
 code postal, autrement dit un identifiant unique pour chaque commune,
 mais délivré par l’INSEE.
 
-## Crééer la variable de département
+## 3.1 Crééer la variable de département
 
 On aimerait représenter le nombre d’associations par département. Pour
 l’instant, le code INSEE ne nous permet que d’identifier la commune.
@@ -205,7 +220,7 @@ s’intitutle “codeDept”.
 assoBZH$codeDept <- substr(assoBZH$adrs_codeinsee, 1,2)
 ```
 
-## Cartes de l’IGN
+## 3.2 Cartes de l’IGN
 
 Il va falloir maintenant récupérer les données nous permettant de
 représenter la carte de France des départements, puis le nombre d’assos
@@ -281,7 +296,7 @@ d’obtenir le deuxième type à partir du premier.
 commBZH_SP <- as_Spatial(commBZH)
 ```
 
-## Joindre les données géographiques et d’associations
+## 3.3 Joindre les données géographiques et d’associations
 
 On peut commencer par compter le nombre d’associations par département
 breton.

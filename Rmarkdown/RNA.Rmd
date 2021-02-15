@@ -1,6 +1,10 @@
 ---
 title: "RNA - Une étude des associations françaises sur la base d'un document administratif"
-output: github_document
+output: 
+  github_document:
+    toc: true
+    toc_depth: 3
+    number_sections: true 
 site: bookdown::bookdown_site
 ---
 

@@ -1,4 +1,4 @@
-# Chapitre 2 : Elles sont où les assos ? ou Répresentations géographiques (#geographie)
+# Elles sont où les assos ? ou Répresentations géographiques {#geographie}
 
 On a vu dans les données que pour chaque association on a le code INSEE sous la variable "adrs_codeinsee". Le code INSEE, c'est un peu comme le code postal, autrement dit un identifiant unique pour chaque commune, mais délivré par l'INSEE. 
 
