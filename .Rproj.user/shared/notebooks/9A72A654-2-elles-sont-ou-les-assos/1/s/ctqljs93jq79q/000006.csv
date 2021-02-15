@@ -1,0 +1,25 @@
+"0","deptBZH <- st_read(""data/maps/DEPARTEMENT.shp"", stringsAsFactors = FALSE) %>%
+  filter(CODE_REG == ""53"")
+"
+"1","Reading layer `"
+"1","DEPARTEMENT"
+"1","' from data source `"
+"1","/home/petitpou/ZACLYS/Projets/RNA/data/maps/DEPARTEMENT.shp"
+"1","' using driver `"
+"1","ESRI Shapefile"
+"1","'"
+"1","
+"
+"1","Simple feature collection with 96 features and 11 fields"
+"1","
+"
+"1","geometry type:  MULTIPOLYGON
+"
+"1","dimension:      XY
+"
+"1","bbox:           "
+"1","xmin: 99217.1 ymin: 6049646 xmax: 1242417 ymax: 7110480"
+"1","
+"
+"1","projected CRS:  RGF93_Lambert_93
+"

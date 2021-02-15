@@ -1,0 +1,5 @@
+"0","rm(list = asso22, asso29, asso35, asso56)
+"
+"2","Error in rm(list = asso22, asso29, asso35, asso56) : 
+  invalid first argument
+"
