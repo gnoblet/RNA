@@ -22,8 +22,8 @@ Pourquoi ce document a-t-il un nom si mystérieux ? Et à qui
 s’adresse-t-il ?
 
 L’idée derrière ce projet est de se concentrer à la fois sur l’usage
-d’un language de programmation (R) et sur ses utilisations possibles,
-ici l’étude des associations loi 1901 françaises. Les publics visés sont
+d’un langage de programmation (R) et sur ses utilisations possibles, ici
+l’étude des associations loi 1901 françaises. Les publics visés sont
 multiples puisqu’on essaiera de faire en sorte qu’aucun pré-requis ne
 soit nécessaire pour comprendre le cheminement.
 
@@ -50,7 +50,7 @@ territoriales, ministères, etc. Cela va d’un fichier de données sur les
 associations, aux dotations perçues par les communes au nombre de
 médecins par département et par spécialité. Il en existe d’autres comme
 le site de l’INSEE. Celui-ci provient tout de même d’une volonté
-explicite de publiciser les données produites par l’Etat.
+explicite de publiciser les données produites par l’État.
 
 ## 2.1 Aller chercher les données sur le site Data.gouv.fr
 
@@ -102,7 +102,7 @@ données correspondant au tableau qui suit :![Nom du jeu de
 données](Material-Rmarkdown/02-documentation-waldec-titre.png).
 Concrètement ça veut dire que le tableau qui suivra ce titre va
 expliciter les données pour chaque fichier qui aura un nom sous la forme
-“rna\_waldec” suivi de “YYYYMMDD”. “YYYYMMDD” correspondant à une date :
+“rna\_import” suivi de “YYYYMMDD”. “YYYYMMDD” correspondant à une date :
 les quatre “Y” représentent l’année (*year* en anglais), par exemple
 2020, “M” représente le mois et “D” le jour (*day* en anglais).
 
@@ -138,7 +138,7 @@ de département et que donc nos données sont subdivisées par département.
 Un fichier correspond donc à un département. Mais que veut dire le
 “.csv” à la fin de chaque nom de fichier ?
 
-Un fichier .csv c’est tout simplement un fichier texte. Chaque ligne
+Un fichier CSV c’est tout simplement un fichier texte. Chaque ligne
 correspond à une association et chaque variable est séparée par un
 séparateur (souvent une virgule, ou un point-virgule ou une tabulation).
 Vous pouvez ouvrir ce fichier dans Libre Office Calc ou Only Office
@@ -149,7 +149,7 @@ dossier dans lequel il est placé.
 
 Ici, en ouvrant un des fichiers dans un éditeur de texte de type “Libre
 Office Writer ou Microsoft Word ou”Kate“, on voit que chaque guillemet
-est séparée d’une autre guillement par un point-vrigule, c’est notre
+est séparée d’une autre guillemet par un point-virgule, c’est notre
 séparateur. Il nous suffit donc d’utiliser la fonction”read.csv2" qui
 permet d’ouvrir un fichier .csv séparé par un point-virgule. Pour
 vérifier, on demande de l’aide pour cette fonction.
@@ -159,11 +159,11 @@ vérifier, on demande de l’aide pour cette fonction.
 ```
 
 On voir dans “Usage” la fonction “read.csv2”. L’argument qui nous
-intéresse est “sep” puisqu’est écrit que “sep” est le *field seprator
-character* ou autrement dit ce qui sépare les variables. On voit que
-pour read.csv2, sep est bien un “;”. On peut donc utiliser cette
-fonction. On va ouvrir le fichier pour le Département du Finistère (29),
-qu on va enregistrer dans notre session R comme l’objet intutlé
+intéresse est “sep” puisque il est écrit que “sep” se trouve être le
+*field seprator character* ou autrement dit ce qui sépare les variables.
+On voit que pour read.csv2, sep est bien un “;”. On peut donc utiliser
+cette fonction. On va ouvrir le fichier pour le Département du Finistère
+(29), qu on va enregistrer dans notre session R comme l’objet intitulé
 “asso29”.
 
 ``` r
@@ -174,9 +174,9 @@ dim(asso29)
     ## [1] 10553    24
 
 On voudrait faire de même pour tout les départements bretons. On les
-ouvre donc séparément, puis on les combine en un unique dataframe
-*assoBZH* \[Voir plus loin pour une méthode permettant d’ouvrir tous les
-dataframes d’un coup\].
+ouvre donc séparément, puis on les combine en un unique tableau de
+données *assoBZH* \[Voir plus loin pour une méthode permettant d’ouvrir
+tous les dataframes d’un coup\].
 
 ``` r
 asso56 <- read.csv2("data/associations/rna_import_20200901_dpt_56.csv")
@@ -186,8 +186,8 @@ assoBZH <- rbind(asso22, asso29, asso35, asso56)
 rm(asso22, asso29, asso35, asso56)
 ```
 
-On voit grâce à la fonction *dim* ci-dessus qu’ona “1” lignes (ou
-associations) et 24 variables pour l’objet *asso29*. Affichons les 5
+On voit grâce à la fonction *dim* ci-dessus qu’on a “1” ligne (ou
+association) et 24 variables pour l’objet *asso29*. Affichons les 5
 premières lignes et les 5 premières variables pour voir à quoi cela
 ressemble.
 
