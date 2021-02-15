@@ -1,0 +1,4 @@
+"0","assoBZH$codeDept <- substr(assoBZ$adrs_codeinsee, 1,2)
+"
+"2","Error in substr(assoBZ$adrs_codeinsee, 1, 2) : object 'assoBZ' not found
+"
