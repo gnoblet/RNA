@@ -1,0 +1,22 @@
+---
+title: "RNA - Une étude des associations françaises sur la base d'un document administratif"
+output: 
+  github_document:
+    toc: true
+    toc_depth: 3
+    number_sections: true 
+site: bookdown::bookdown_site
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r child = '0-introduction.Rmd'}
+```
+
+```{r child = '1-decouvrir-les-donnees.Rmd'}
+```
+
+```{r child = '2-elles-sont-ou-les-assos.Rmd'}
+```
