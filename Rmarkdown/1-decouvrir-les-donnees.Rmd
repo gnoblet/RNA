@@ -1,0 +1,71 @@
+# Chapitre 1 : Découvrir les données (#decouvrir)
+
+Une question est apparue spontanément. Qui sont les associations françaises ? Répondre à cette question en amène directement d'autres. Où sont-elles? Combien sont-elles ? Quand ont-elles été créées ? Quel est leur objet ? Pour cela, on a récupérer le fichier du Répertoire National des Associations sur le site <https://data.gouv.fr>. Ce site est une tentative de rendre ouverte les données publiques françaises et de nombreux acteurs publient leurs jeux de données : collectivités territoriales, ministères, etc. Cela va d'un fichier de données sur les associations, aux dotations perçues par les communes au nombre de médecins par département et par spécialité. Il en existe d'autres comme le site de l'INSEE. Celui-ci provient tout de même d'une volonté explicite de publiciser les données produites par l'Etat.
+
+## 1. Aller chercher les données sur le site Data.gouv.fr
+
+### 1.1. Comprendre le site
+
+Il suffit donc d'écrire "rna associations" dans la barre de recherche. Le premier résultat s'intitule "Répertoire National des Associations" et est produit par un "organisme certifié", ici le Ministère de l'Intérieur. On peut y lire :
+
+>  RNA répertorie l’ensemble des associations relevant de la loi du 1er juillet 1901 relative au contrat d’association, dont le siège est en France (métropole et outre-mer) à l’exclusion des départements de la Moselle (57), du Bas-Rhin (67) et du Haut-Rhin (68) qui relèvent d’un régime spécifique.
+Le RNA contient également, dans les mêmes conditions, les associations reconnues d’utilité publique.
+Le RNA est alimenté après instruction du dossier par le greffe des associations lors d’une création, d’une modification ou d’une dissolution.
+
+> Les déclarations de création sont ensuite publiées au Journal Officiel des Associations et Fondations d’Entreprise (JOAFE).
+
+Bon, qu'apprend-on ? Qu'on aurait toutes les données relatives aux associations hors-concordat^[Sur le concordat, vous pouvez vous renseignez ici : ], notamment les associations reconnues d'utilité publique, et que le fichier est mis à jour à chaque création, dissolution ou modification d'une association. Que cela nous dit-il sur les données ? Pas grand chose, non ? Qu'est-ce qu'on veut dire par là "dire sur les données" ? Quel est le fichier de données ? A quoi il ressemble ? Quel type d'information a-t-on dedans ? Manque-t-il des données ?
+
+Mais, magie, c'est bien foutu l'Etat Français, il est ensuite précisé ceci :
++     le cas échéant, le n° RNA
++     le nom de l’association et son sigle
++     l’objet de l’association et son objet social
++     l’adresse du siège
++     le cas échéant, l’adresse de gestion
++     le cas échéant, le site internet de l’association
+
+On devrait donc avoir toutes ses informations. C'est super déjà si c'est le cas ! On va pouvoir étudier la domiciliation des associations, leurs noms et leurs objets. Si on descend sur la page internet, on peut y voir un encart "Documentation" et un fichier "Description des données exposées par le RNA". Ce fichier est un tableau qui décrit exactement ce qui est présent dans les données du RNA.
+
+### 1.2. Découvrons les données
+
+Ouvrons ce fichier. On peut d'abord y voir le nom exact du jeu de données correspondant au tableau qui suit :![Nom du jeu de données](Material-Rmarkdown/02-documentation-waldec-titre.png). Concrètement ça veut dire que le tableau qui suivra ce titre va expliciter les données pour chaque fichier qui aura un nom sous la forme "rna_waldec" suivi de "YYYYMMDD". "YYYYMMDD" correspondant à une date : les quatre "Y" représentent l'année (*year* en anglais), par exemple 2020, "M" représente le mois et "D" le jour (*day* en anglais). 
+
+Et les variables ? ![Variables du jeu de données](Material-Rmarkdown/02-documentation-waldec-variables.png)
+
+Chaque variable est décrite par son nom dans la base de données (ici la première variable prendra le nom "id"), son type (ici la première variable est un varchar(10) ), et enfin sa description (ici la première variable est le Numéro Waldec national unique de l'association). Pour ce qui est du type de variable, on ne va pas tout couvrir, mais on peut noter cependant que dans ce jeu de données on ne trouve que ceci :
++ varchar(n), avec un "n" un nombre : c'est une chaîne de caractères alphanumériques de longueur maximale *n*. Par exemple, "RNA" est une chaîne de caractères de longueur 3
++ date : une date, rien d'impressionnant, mais qui doit avoir un format de date. Par exemple, 2020-01-01.
++ text : une chaîne de caractère dont la longueur n'est pas définie.
+
+Téléchargeons un des dossiers correspondant à "rna_waldec". Celui du 01 septembre 2020. Vous pouvez le trouver de manière stable ici : <https://www.data.gouv.fr/fr/datasets/r/8c3384ab-bd29-43df-9730-8c89a88e634a>. C'est un dossiez .zip ou dossier compressé dont on peut extraire plusieurs fichiers. Dans vos documents, créez un dossier "rna-associations", puis dans ce dossier un dossier "Data" dans lequel vous placez le fichier .zip. Vous pouvez maintenant faire un clique-droit extraire.
+
+De nombreux fichiers apparaissent. Ils ont tous un nom sous la forme "rna_waldec", suivi de la date, puis de "dpt" et d'un numéro. On peut pré-supposer assez facilement que ces deux derniers items sont le numéro de département et que donc nos données sont subdivisées par département. Un fichier correspond donc à un département. Mais que veut dire le ".csv" à la fin de chaque nom de fichier ?
+
+Un fichier .csv c'est tout simplement un fichier texte. Chaque ligne correspond à une association et chaque variable est séparée par un séparateur (souvent une virgule, ou un point-virgule ou une tabulation). Vous pouvez ouvrir ce fichier dans Libre Office Calc ou Only Office Desktop Editor(ou possiblement Microsoft Excel si vous préférez les solutions payantes et non-libres). Pour l'ouvrir dans R, il nous suffit de savoir quel est le séparateur, de connaître le nom du fichier et le dossier dans lequel il est placé.
+
+Ici, en ouvrant un des fichiers dans un éditeur de texte de type "Libre Office Writer ou Microsoft Word ou "Kate", on voit que chaque guillemet est séparée d'une autre guillement par un point-vrigule, c'est notre séparateur. Il nous suffit donc d'utiliser la fonction "read.csv2" qui permet d'ouvrir un fichier .csv séparé par un point-virgule. Pour vérifier, on demande de l'aide pour cette fonction.
+```{r}
+?read.csv2
+```
+On voir dans "Usage" la fonction "read.csv2". L'argument qui nous intéresse est "sep" puisqu'est écrit que "sep" est le *field seprator character*  ou autrement dit ce qui sépare les variables. On voit que pour read.csv2, sep est bien un ";". On peut donc utiliser cette fonction. On va ouvrir le fichier pour le Département du Finistère (29), qu on va enregistrer dans notre session R comme l'objet intutlé "asso29".
+
+```{r}
+asso29 <- read.csv2("data/associations/rna_import_20200901_dpt_29.csv")
+dim(asso29)
+
+```
+
+On voudrait faire de même pour tout les départements bretons. On les ouvre donc séparément, puis on les combine en un unique dataframe *assoBZH* [Voir plus loin pour une méthode permettant d'ouvrir tous les dataframes d'un coup].
+
+```{r}
+asso56 <- read.csv2("data/associations/rna_import_20200901_dpt_56.csv")
+asso35 <- read.csv2("data/associations/rna_import_20200901_dpt_35.csv")
+asso22 <- read.csv2("data/associations/rna_import_20200901_dpt_22.csv")
+assoBZH <- rbind(asso22, asso29, asso35, asso56)
+rm(asso22, asso29, asso35, asso56)
+```
+
+On voit grâce à la fonction *dim* ci-dessus qu'ona "1" lignes (ou associations) et 24 variables pour l'objet *asso29*. Affichons les 5 premières lignes et les 5 premières variables pour voir à quoi cela ressemble.
+```{r}
+head(assoBZH, n = 5)[,1:5]
+```

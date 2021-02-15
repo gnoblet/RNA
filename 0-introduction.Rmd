@@ -1,7 +1,0 @@
-# 0 - Introduction {#intro}
-
-Pourquoi ce document a-t-il un nom si mystérieux ? Et à qui s’adresse-t-il ?
-
-L’idée derrière ce projet est de se concentrer à la fois sur l’usage d’un language de programmation (R) et sur ses utilisations possibles, ici l’étude des associations loi 1901 françaises. Les publics visés sont multiples puisqu’on essaiera de faire en sort qu’aucun pré-requis ne soit nécessaire.
-
-Je vais expliciter tout le cheminement de pensée. Des élèves de Seconde ne pourront peut-être pas tout comprendre, et des étudiant·es de Master 2 trouveront peut-être cela trop lent. Un goût de trop peu même ! Mais l’idée est d’attiser la curiosité et de faire faire avant de parler théorie et concepts emmerdants pour chercheur·euses hors du sol et derrière son ordi dans un vieux bureau.
