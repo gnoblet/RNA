@@ -7,4 +7,4 @@ et de type de représentations statistiques ;
 + découvrir les associations françaises à travers un jeu de données public.
 + (un objectif collatéral est de promouvoir l'utilisation du language Markdown pour la prise de notes et la rédaction de travaux de recherche en R Markdown)
 
-**L'état actuel du tutoriel** se trouve  [ici](RNA.md)
+**L'état actuel du tutoriel** se trouve  [ici](Rmarkdown/RNA.md)
