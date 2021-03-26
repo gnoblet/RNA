@@ -1,0 +1,114 @@
+# Découvrir les données {#decouvrir}
+
+Une question est apparue spontanément. Qui sont les associations françaises ? Répondre à cette question en amène directement d'autres. Où sont-elles? Combien sont-elles ? Quand ont-elles été créées ? Quel est leur objet ? Pour cela, on a récupérer le fichier du Répertoire National des Associations sur le site <https://data.gouv.fr>. Ce site est une tentative de rendre ouverte les données publiques françaises et de nombreux acteurs publient leurs jeux de données : collectivités territoriales, ministères, etc. Cela va d'un fichier de données sur les associations, aux dotations perçues par les communes au nombre de médecins par département et par spécialité. Il en existe d'autres comme le site de l'INSEE. Celui-ci provient tout de même d'une volonté explicite de publiciser les données produites par l’État.
+
+## Aller chercher les données sur le site Data.gouv.fr
+
+### Comprendre le site
+
+Il suffit donc d'écrire "rna associations" dans la barre de recherche. Le premier résultat s'intitule "Répertoire National des Associations" et est produit par un "organisme certifié", ici le Ministère de l'Intérieur. On peut y lire :
+
+>  RNA répertorie l’ensemble des associations relevant de la loi du 1er juillet 1901 relative au contrat d’association, dont le siège est en France (métropole et outre-mer) à l’exclusion des départements de la Moselle (57), du Bas-Rhin (67) et du Haut-Rhin (68) qui relèvent d’un régime spécifique.
+Le RNA contient également, dans les mêmes conditions, les associations reconnues d’utilité publique.
+Le RNA est alimenté après instruction du dossier par le greffe des associations lors d’une création, d’une modification ou d’une dissolution.
+
+> Les déclarations de création sont ensuite publiées au Journal Officiel des Associations et Fondations d’Entreprise (JOAFE).
+
+Bon, qu'apprend-on ? Qu'on aurait toutes les données relatives aux associations hors-concordat^[Sur le concordat, vous pouvez vous renseignez ici : ], notamment les associations reconnues d'utilité publique, et que le fichier est mis à jour à chaque création, dissolution ou modification d'une association. Que cela nous dit-il sur les données ? Pas grand chose, non ? Qu'est-ce qu'on veut dire par là "dire sur les données" ? Quel est le fichier de données ? A quoi il ressemble ? Quel type d'information a-t-on dedans ? Manque-t-il des données ?
+
+Mais, magie, c'est bien foutu l'Etat Français, il est ensuite précisé ceci :
++     le cas échéant, le n° RNA
++     le nom de l’association et son sigle
++     l’objet de l’association et son objet social
++     l’adresse du siège
++     le cas échéant, l’adresse de gestion
++     le cas échéant, le site internet de l’association
+
+On devrait donc avoir toutes ses informations. C'est super déjà si c'est le cas ! On va pouvoir étudier la domiciliation des associations, leurs noms et leurs objets. Si on descend sur la page internet, on peut y voir un encart "Documentation" et un fichier "Description des données exposées par le RNA". Ce fichier est un tableau qui décrit exactement ce qui est présent dans les données du RNA.
+
+### Découvrons les données
+
+Ouvrons ce fichier. On peut d'abord y voir le nom exact du jeu de données correspondant au tableau qui suit :![Nom du jeu de données](rmd/rmd_material/2_documentation_waldec_titre.png). Concrètement ça veut dire que le tableau qui suivra ce titre va expliciter les données pour chaque fichier qui aura un nom sous la forme "rna_import" suivi de "YYYYMMDD". "YYYYMMDD" correspondant à une date : les quatre "Y" représentent l'année (*year* en anglais), par exemple 2020, "M" représente le mois et "D" le jour (*day* en anglais). 
+
+Et les variables ? ![Variables du jeu de données](rmd/rmd_material/2_documentation_waldec_variables.png)
+
+Chaque variable est décrite par son nom dans la base de données (ici la première variable prendra le nom "id"), son type (ici la première variable est un varchar(10) ), et enfin sa description (ici la première variable est le Numéro Waldec national unique de l'association). Pour ce qui est du type de variable, on ne va pas tout couvrir, mais on peut noter cependant que dans ce jeu de données on ne trouve que ceci :
++ varchar(n), avec un "n" un nombre : c'est une chaîne de caractères alphanumériques de longueur maximale *n*. Par exemple, "RNA" est une chaîne de caractères de longueur 3
++ date : une date, rien d'impressionnant, mais qui doit avoir un format de date. Par exemple, 2020-01-01.
++ text : une chaîne de caractère dont la longueur n'est pas définie.
+
+Téléchargeons un des dossiers correspondant à "rna_waldec". Celui du 01 septembre 2020. Vous pouvez le trouver de manière stable ici : <https://www.data.gouv.fr/fr/datasets/r/8c3384ab-bd29-43df-9730-8c89a88e634a>. C'est un dossiez .zip ou dossier compressé dont on peut extraire plusieurs fichiers. Dans vos documents, créez un dossier "rna-associations", puis dans ce dossier un dossier "Data" dans lequel vous placez le fichier .zip. Vous pouvez maintenant faire un clique-droit extraire.
+
+De nombreux fichiers apparaissent. Ils ont tous un nom sous la forme "rna_waldec", suivi de la date, puis de "dpt" et d'un numéro. On peut pré-supposer assez facilement que ces deux derniers items sont le numéro de département et que donc nos données sont subdivisées par département. Un fichier correspond donc à un département. Mais que veut dire le ".csv" à la fin de chaque nom de fichier ?
+
+Un fichier CSV c'est tout simplement un fichier texte. Chaque ligne correspond à une association et chaque variable est séparée par un séparateur (souvent une virgule, ou un point-virgule ou une tabulation). Vous pouvez ouvrir ce fichier dans Libre Office Calc ou Only Office Desktop Editor(ou possiblement Microsoft Excel si vous préférez les solutions payantes et non-libres). Pour l'ouvrir dans R, il nous suffit de savoir quel est le séparateur, de connaître le nom du fichier et le dossier dans lequel il est placé.
+
+Ici, en ouvrant un des fichiers dans un éditeur de texte de type "Libre Office Writer ou Microsoft Word ou "Kate", on voit que chaque guillemet est séparée d'une autre guillemet par un point-virgule, c'est notre séparateur. Il nous suffit donc d'utiliser la fonction "read.csv2" qui permet d'ouvrir un fichier .csv séparé par un point-virgule. Pour vérifier, on demande de l'aide pour cette fonction.
+```{r}
+?read.csv2
+```
+On voir dans "Usage" la fonction "read.csv2". L'argument qui nous intéresse est "sep" puisque il est écrit que "sep" se trouve être le *field seprator character*  ou autrement dit ce qui sépare les variables. On voit que pour read.csv2, sep est bien un ";". On peut donc utiliser cette fonction. On va ouvrir le fichier pour le Département du Finistère (29), qu on va enregistrer dans notre session R comme l'objet intitulé "asso29".
+
+```{r}
+asso29 <- read.csv2("data/associations/rna_import_20200901_dpt_29.csv")
+dim(asso29)
+```
+Interlude : en écrivant en R on a besoin de packages qu'il faut installer puis charger. Kézako tout ça ? Imaginez que vous souhaitez scier du bois. Vous avez besoin d'obtenir une scie si vous n'en possédez pas et vous allez donc en acheter une. C'est l'installation du package que vous pouvez installer avec la commande suivante par exemple pour le package *pacman* : 
+```{r, eval = FALSE}
+## It is set not to run in the .rmd, remove "eval = FALSE" if necessart
+install.packages("pacman", repos='http://cran.us.r-project.org')
+```
+
+Bon, c'est super vous avez votre scie. Pour pouvoir l'utiliser, vous avez besoin de la prendre en main. Pour cela, et toujours pour le package *pacman*, il suffit d'écrire :
+```{r}
+library("pacman")
+```
+
+Pour résumer, dès que vous aurez besoin d'un outil (autrement dit, d'un package ou d'une fonction), il faut l'installer (ne le faire qu'une seule fois) et le charger. Le package pacman que je viens de charger nous permet de simplifier cette procédure. Si je veux charger les packages data.table, magrittr, stringr et purrr, c'est aussi simple que ça :
+```{r}
+## Load great packages
+pacman::p_load(
+  data.table,
+  stringr,
+  magrittr,
+  purrr
+)
+```
+
+Pour utiliser une fonction d'un package, deux solutions. Soit on écrit *package::fonction* ou juste *fonction*. Pourquoi préciser le package ? Parce que parfois, certaines fonctions ont le même nom dans différents packages et qu'il est alors nécessaires de préciser le package dont est issue la fonction. Cela dépend de l'ordre de chargement des packages, mais c'est une autre histoire. Si vous n'êtes pas certain⋅es, ajoutez le nom du package.
+
+On voudrait maintenant obtenir une liste avec les noms de tous les fichiers .csv présents dans le dossier "data/associations" et leur chemin dans notre dosssier de travail, puis les importer.
+```{r}
+## Lister les fichiers CSV
+list_CSV <- list.files("data/associations", full.names = T)
+```
+
+```{r}
+## Importer les fichiers .csv
+assos <- list_CSV %>%
+  map(read.csv2, fileEncoding = "latin1") 
+
+```
+
+L'objet "assos" est une liste qui comprend . Il faut imaginer un classeur avec dans chaque pochette plastique un tableau de données. Pour l'instant, on n'a pas mis d'étiquettes sur chaque pochette plastique pour savoir ce qu'il y a dedans. On peut par exemple se dire qu'on voudrait le numéro du département comme étiquette. On peut donc récupérer la listes des noms de département dans la liste des fichiers *list_CSV* et la coller comme étiquette de chaque pochette plastique.
+```{r}
+## Nommer chaque item de la liste
+names(assos) <- list_CSV %>% str_sub(-10, -5)
+```
+Admettons qu'on désire voir les cinq premières associations du département 22, soit les Côtes d'Armor (premières au sens de premières à apparaître dans le tableau, puisqu'on ne sait pas encore dans quel ordre les associations sont classées, et finalement, ça importe peu). Pour cela, on regarde l'étiquette *dpt_22* et on récupère l'intérieur de la pochette. Pour récupérer l'élément *t* d'une liste *L* en R, on écrit `L[["t"]]*`. On utilise ensuite le "pipe" [expliquer le concept du pipe, analogie tuyau, usine de traitement de l'eau], ce truc là *%>%* ! Plus d'infos ici : [to do]. Mais pou résumer, ça permet d'appliquer plusieurs fonctions de suite à un objet. Ici, `assos[["dpt_22"]]` nous donne le tableau des associations des Côtes d'Armor, mais on ne souhaite qu'afficher les 5 premières. Et puis, tant qu'à faire, puisqu'il y a beaucoup de variables, on pourrait par exemple ne vouloir afficher que l'identifiant de l'association, la date de sa publication au Journal Officiel, son titre et son objet. On utilise donc le pipe, puis une autre fonction "head" qui nous permet de n'afficher qu'un certain nombre de lignes du tableau. Ici, 5 lignes. Enfin, `setDT` et ce qui suit permet de n'afficher que les 4 colonnes/variables voulues. 
+
+```{r}
+assos[["dpt_22"]] %>% head(n = 5) %>% setDT %>% .[, .(id, date_publi, titre, objet)]
+```
+
+On remarque qu'il n'y a pas de variable/de colonne relative au département, ce qui pourrait être utile, par exemple pour compter le nombre d'associations par département. La seule colonne qui pourrait nous donner cette information est la colonne "adrs_codeinsee" qui est le code de la commune pour l'INSEE, et qui, comme le code postal, commence par le numéro du département. On peut donc extraire les deux premiers chiffres du code INSEE et créer une nouvelle variable de département qu'on nomme *code_dept* :
+```{r}
+## Créer la variable 
+## Pour chaque élément de la liste, pour chaque ligne dans le tableau, on prend les deux premiers chiffres de la variable "adrs_codeinsee".
+assos %<>% 
+  map(setDT) %>% 
+  map(~ .[, code_dept := str_sub(adrs_codeinsee, 1, 2)])
+assos[["dpt_02"]][, code_dept]
+#### Problème : en substring, il nous manque le 0 précédant pour les départements de 1 à 9 .
+```
+
