@@ -1,9 +1,0 @@
-"0","asso29 <- read.csv2(""data/associations/rna_import_20200901_dpt_29.csv"")
-asso29 <- read.csv2(""data/associations/rna_import_20200901_dpt_29.csv"")
-dim(asso29)
-"
-"1","[1]"
-"1"," 10553"
-"1","    24"
-"1","
-"
